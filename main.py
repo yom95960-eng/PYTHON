@@ -4,19 +4,13 @@ import mysql.connector
 from mysql.connector import Error
 
 
-# ============================================================
-# DATABASE SETTINGS
-# Change these values according to your MySQL installation.
-# ============================================================
 DB_HOST = "localhost"
 DB_USER = "root"
 DB_PASSWORD = "MYSQL2026"
 DB_NAME = "student_performance_db"
 
 
-# ============================================================
-# DATABASE CONNECTION
-# ============================================================
+# DBCONNECTIONS
 def get_connection():
     return mysql.connector.connect(
         host=DB_HOST,
@@ -26,9 +20,7 @@ def get_connection():
     )
 
 
-# ============================================================
-# VALIDATION / CALCULATION
-# ============================================================
+#CALCULATION
 def valid_mark(value, field_name, maximum=100):
     try:
         number = float(value)
@@ -66,9 +58,7 @@ def calculate_result(marks):
     return total, percentage, grade, result
 
 
-# ============================================================
-# LOGIN WINDOW
-# ============================================================
+#LOGINWINDOW
 class LoginWindow:
     def __init__(self, root):
         self.root = root
@@ -150,9 +140,7 @@ class LoginWindow:
             )
 
 
-# ============================================================
-# MAIN APPLICATION
-# ============================================================
+#APPLICATION
 class StudentApp:
     def __init__(self, root, username):
         self.root = root
@@ -170,9 +158,7 @@ class StudentApp:
 
         self.root.protocol("WM_DELETE_WINDOW", self.logout)
 
-    # --------------------------------------------------------
-    # VARIABLES
-    # --------------------------------------------------------
+ #VARIABLES
     def create_variables(self):
         self.roll_var = tk.StringVar()
         self.name_var = tk.StringVar()
@@ -197,9 +183,7 @@ class StudentApp:
 
         self.search_var = tk.StringVar()
 
-    # --------------------------------------------------------
-    # INTERFACE
-    # --------------------------------------------------------
+  #INTERFACE
     def create_interface(self):
         header = ttk.Frame(self.root, padding=12)
         header.pack(fill="x")
@@ -274,9 +258,6 @@ class StudentApp:
         self.create_form()
         self.create_records_table()
 
-    # --------------------------------------------------------
-    # FORM
-    # --------------------------------------------------------
     def create_form(self):
         personal = ttk.LabelFrame(
             self.form_tab,
@@ -378,9 +359,7 @@ class StudentApp:
             foreground="gray"
         ).pack(anchor="w", padx=10)
 
-    # --------------------------------------------------------
-    # RECORD TABLE
-    # --------------------------------------------------------
+    # RECORDTABLE
     def create_records_table(self):
         columns = (
             "id", "roll", "name", "class", "div",
@@ -457,9 +436,7 @@ class StudentApp:
 
         self.tree.bind("<<TreeviewSelect>>", self.select_record)
 
-    # --------------------------------------------------------
-    # VALIDATE FORM
-    # --------------------------------------------------------
+    
     def get_form_data(self):
         roll = self.roll_var.get().strip()
         name = self.name_var.get().strip()
@@ -548,9 +525,7 @@ class StudentApp:
             "result": result
         }
 
-    # --------------------------------------------------------
-    # ADD / INSERT
-    # --------------------------------------------------------
+    #ADD OPERATION
     def add_record(self):
         data = self.get_form_data()
         if data is None:
@@ -609,9 +584,7 @@ class StudentApp:
             else:
                 messagebox.showerror("Database Error", str(e))
 
-    # --------------------------------------------------------
-    # SELECT / VIEW
-    # --------------------------------------------------------
+    # VIEWWOPERATIONS
     def load_records(self):
         self.search_var.set("")
 
@@ -646,9 +619,7 @@ class StudentApp:
 
         self.update_statistics()
 
-    # --------------------------------------------------------
-    # SEARCH
-    # --------------------------------------------------------
+    # SEARCHOPERATIONS
     def search_records(self):
         keyword = self.search_var.get().strip()
 
@@ -692,9 +663,7 @@ class StudentApp:
         except Error as e:
             messagebox.showerror("Database Error", str(e))
 
-    # --------------------------------------------------------
-    # SELECT RECORD FROM TABLE
-    # --------------------------------------------------------
+    # RECORD
     def select_record(self, event=None):
         selected = self.tree.selection()
 
@@ -728,9 +697,7 @@ class StudentApp:
         self.assignment_var.set(values[16])
         self.internal_var.set(values[17])
 
-    # --------------------------------------------------------
-    # UPDATE
-    # --------------------------------------------------------
+    #UPDATE
     def update_record(self):
         if not self.selected_id:
             messagebox.showwarning(
@@ -798,9 +765,7 @@ class StudentApp:
         except Error as e:
             messagebox.showerror("Database Error", str(e))
 
-    # --------------------------------------------------------
     # DELETE
-    # --------------------------------------------------------
     def delete_record(self):
         if not self.selected_id:
             messagebox.showwarning(
@@ -846,9 +811,7 @@ class StudentApp:
         except Error as e:
             messagebox.showerror("Database Error", str(e))
 
-    # --------------------------------------------------------
-    # CLEAR / RESET
-    # --------------------------------------------------------
+    # CLEAR
     def clear_form(self):
         self.selected_id = None
 
@@ -876,9 +839,7 @@ class StudentApp:
         for item in self.tree.selection():
             self.tree.selection_remove(item)
 
-    # --------------------------------------------------------
-    # DASHBOARD STATISTICS
-    # --------------------------------------------------------
+    # STATISTICS
     def update_statistics(self):
         try:
             conn = get_connection()
@@ -913,9 +874,7 @@ class StudentApp:
         except Error:
             pass
 
-    # --------------------------------------------------------
     # LOGOUT
-    # --------------------------------------------------------
     def logout(self):
         if messagebox.askyesno("Logout", "Do you want to logout?"):
             self.root.destroy()
@@ -924,9 +883,7 @@ class StudentApp:
             login_root.mainloop()
 
 
-# ============================================================
-# PROGRAM START
-# ============================================================
+#START
 if __name__ == "__main__":
     root = tk.Tk()
     LoginWindow(root)
