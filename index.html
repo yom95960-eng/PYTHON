@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Internship Management System</title>
+</head>
+
+<body style="background-color: lightblue;">
+
+    <center>
+        <h1>Internship Management System</h1>
+
+        <h3>Student Internship Application Form</h3>
+
+        <form action="/submit" method="POST">
+
+            Student Name:
+            <input type="text" name="name" required>
+            <br><br>
+
+            Student ID:
+            <input type="text" name="student_id" required>
+            <br><br>
+
+            Company Name:
+            <input type="text" name="company" required>
+            <br><br>
+
+            Internship Name:
+            <input type="text" name="internship" required>
+            <br><br>
+
+            <input type="submit" value="Submit Application">
+
+        </form>
+
+        <br>
+
+        <a href="/show">
+            <button>Show Applications</button>
+        </a>
+
+    </center>
+
+</body>
+
+</html>
